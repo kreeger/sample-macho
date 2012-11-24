@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Completed:</b>
+  <%= @pushup_reminder.completed %>
+</p>
+
+<p>
+  <b>Num pushups:</b>
+  <%= @pushup_reminder.num_pushups %>
+</p>
+
+<p>
+  <b>When sent:</b>
+  <%= @pushup_reminder.when_sent %>
+</p>
+
+
+<%= link_to 'Edit', edit_pushup_reminder_path(@pushup_reminder) %> |
+<%= link_to 'Back', pushup_reminders_path %>

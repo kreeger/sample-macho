@@ -1,0 +1,29 @@
+<%= form_for(@pushup_reminder) do |f| %>
+  <% if @pushup_reminder.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pushup_reminder.errors.count, "error") %> prohibited this pushup_reminder from being saved:</h2>
+
+      <ul>
+      <% @pushup_reminder.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :completed %><br />
+    <%= f.check_box :completed %>
+  </div>
+  <div class="field">
+    <%= f.label :num_pushups %><br />
+    <%= f.number_field :num_pushups %>
+  </div>
+  <div class="field">
+    <%= f.label :when_sent %><br />
+    <%= f.datetime_select :when_sent %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

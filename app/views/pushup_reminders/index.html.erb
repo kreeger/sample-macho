@@ -1,0 +1,27 @@
+<h1>Listing pushup_reminders</h1>
+
+<table>
+  <tr>
+    <th>Completed</th>
+    <th>Num pushups</th>
+    <th>When sent</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @pushup_reminders.each do |pushup_reminder| %>
+  <tr>
+    <td><%= pushup_reminder.completed %></td>
+    <td><%= pushup_reminder.num_pushups %></td>
+    <td><%= pushup_reminder.when_sent %></td>
+    <td><%= link_to 'Show', pushup_reminder %></td>
+    <td><%= link_to 'Edit', edit_pushup_reminder_path(pushup_reminder) %></td>
+    <td><%= link_to 'Destroy', pushup_reminder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Pushup reminder', new_pushup_reminder_path %>
