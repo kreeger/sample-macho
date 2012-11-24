@@ -1,4 +1,4 @@
-<%= form_for(@pushup_reminder) do |f| %>
+<%= form_for([@user, @pushup_reminder]) do |f| %>
   <% if @pushup_reminder.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@pushup_reminder.errors.count, "error") %> prohibited this pushup_reminder from being saved:</h2>

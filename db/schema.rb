@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 20121124042945) do
     t.boolean  "completed"
     t.integer  "num_pushups"
     t.datetime "when_sent"
+    t.integer  "user_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end

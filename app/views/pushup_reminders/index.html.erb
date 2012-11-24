@@ -1,4 +1,4 @@
-<h1>Listing pushup_reminders</h1>
+<h1>Listing pushup_reminders for <%= @user.username %></h1>
 
 <table>
   <tr>
@@ -15,13 +15,13 @@
     <td><%= pushup_reminder.completed %></td>
     <td><%= pushup_reminder.num_pushups %></td>
     <td><%= pushup_reminder.when_sent %></td>
-    <td><%= link_to 'Show', pushup_reminder %></td>
-    <td><%= link_to 'Edit', edit_pushup_reminder_path(pushup_reminder) %></td>
-    <td><%= link_to 'Destroy', pushup_reminder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Show', user_pushup_reminder_path(@user, pushup_reminder) %></td>
+    <td><%= link_to 'Edit', edit_user_pushup_reminder_path(@user, pushup_reminder) %></td>
+    <td><%= link_to 'Destroy', user_pushup_reminder_path(@user, pushup_reminder), method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Pushup reminder', new_pushup_reminder_path %>
+<%= link_to 'New Pushup reminder', new_user_pushup_reminder_path(@user) %>
