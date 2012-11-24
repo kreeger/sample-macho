@@ -2,5 +2,9 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @pushup_reminder %> |
-<%= link_to 'Back', pushup_reminders_path %>
+<% if @user.presence %>
+    <%= link_to 'Show', user_pushup_reminder_path(@user, @pushup_reminder) %> |
+    <%= link_to 'Back', user_pushup_reminders_path(@user) %>
+<% else %>
+    <%= link_to 'Show', pushup_reminder_path(@pushup_reminder) %> | <%= link_to 'Back', pushup_reminders_path %>
+<% end %>

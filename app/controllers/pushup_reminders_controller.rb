@@ -1,10 +1,11 @@
 class PushupRemindersController < ApplicationController
   before_filter :get_user
+  before_filter :get_pushup_reminders, only: [:index]
+  before_filter :get_pushup_reminder, except: [:new, :create, :index]
+
   # GET /pushup_reminders
   # GET /pushup_reminders.json
   def index
-    @pushup_reminders = @user.pushup_reminders
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @pushup_reminders }
@@ -14,8 +15,6 @@ class PushupRemindersController < ApplicationController
   # GET /pushup_reminders/1
   # GET /pushup_reminders/1.json
   def show
-    @pushup_reminder = @user.pushup_reminders.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @pushup_reminder }
@@ -25,7 +24,7 @@ class PushupRemindersController < ApplicationController
   # GET /pushup_reminders/new
   # GET /pushup_reminders/new.json
   def new
-    @pushup_reminder = @user.pushup_reminders.build
+    @pushup_reminder = @user.presence ? @user.pushup_reminders.build : PushupReminder.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,13 +34,16 @@ class PushupRemindersController < ApplicationController
 
   # GET /pushup_reminders/1/edit
   def edit
-    @pushup_reminder = @user.pushup_reminders.find(params[:id])
   end
 
   # POST /pushup_reminders
   # POST /pushup_reminders.json
   def create
-    @pushup_reminder = @user.pushup_reminders.create(params[:pushup_reminder])
+    if @user.presence
+      @pushup_reminder = @user.pushup_reminders.create(params[:pushup_reminder])
+    else
+      @pushup_reminder = PushupReminder.create(params[:pushup_reminder])
+    end
 
     respond_to do |format|
       if @pushup_reminder.save
@@ -57,8 +59,6 @@ class PushupRemindersController < ApplicationController
   # PUT /pushup_reminders/1
   # PUT /pushup_reminders/1.json
   def update
-    @pushup_reminder = @user.pushup_reminders.find(params[:id])
-
     respond_to do |format|
       if @pushup_reminder.update_attributes(params[:pushup_reminder])
         format.html { redirect_to [@user, @pushup_reminder], notice: 'Pushup reminder was successfully updated.' }
@@ -73,7 +73,6 @@ class PushupRemindersController < ApplicationController
   # DELETE /pushup_reminders/1
   # DELETE /pushup_reminders/1.json
   def destroy
-    @pushup_reminder = @user.pushup_reminders.find(params[:id])
     @pushup_reminder.destroy
 
     respond_to do |format|
@@ -85,6 +84,14 @@ class PushupRemindersController < ApplicationController
   protected
 
   def get_user
-    @user = User.find(params[:user_id])
+    @user = params[:user_id] ? User.find(params[:user_id]) : nil
+  end
+
+  def get_pushup_reminders
+    @pushup_reminders = @user.presence ? @user.pushup_reminders : PushupReminder.all
+  end
+
+  def get_pushup_reminder
+    @pushup_reminder = @user.presence ? @user.pushup_reminders.find(params[:id]) : PushupReminder.find(params[:id])
   end
 end

@@ -1,10 +1,11 @@
-<h1>Listing pushup_reminders for <%= @user.username %></h1>
+<h1>Listing pushup_reminders<% if @user.presence %> for <%= @user.username %><% end %></h1>
 
 <table>
   <tr>
     <th>Completed</th>
     <th>Num pushups</th>
     <th>When sent</th>
+    <% unless @user.presence %><th>User</th><% end %>
     <th></th>
     <th></th>
     <th></th>
@@ -14,14 +15,22 @@
   <tr>
     <td><%= pushup_reminder.completed %></td>
     <td><%= pushup_reminder.num_pushups %></td>
-    <td><%= pushup_reminder.when_sent %></td>
+    <td><%= pushup_reminder.when_sent.strftime('%m/%d/%Y, %l:%m %P') %></td>
+    <% if @user.presence %>
     <td><%= link_to 'Show', user_pushup_reminder_path(@user, pushup_reminder) %></td>
     <td><%= link_to 'Edit', edit_user_pushup_reminder_path(@user, pushup_reminder) %></td>
     <td><%= link_to 'Destroy', user_pushup_reminder_path(@user, pushup_reminder), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% else %>
+    <td><%= link_to pushup_reminder.user.username, pushup_reminder.user %></td>
+    <td><%= link_to 'Show', pushup_reminder_path(pushup_reminder) %></td>
+    <td><%= link_to 'Edit', edit_pushup_reminder_path(pushup_reminder) %></td>
+    <td><%= link_to 'Destroy', pushup_reminder_path(pushup_reminder), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Pushup reminder', new_user_pushup_reminder_path(@user) %>
+<% path = @user.presence ? new_user_pushup_reminder_path(@user) : new_pushup_reminder_path %>
+<%= link_to 'New Pushup reminder', path %>

@@ -2,7 +2,7 @@
 
 <p>
     <b>User:</b>
-    <%= link_to @user.username, @user %>
+    <%= link_to @pushup_reminder.user.username, @pushup_reminder.user %>
 </p>
 
 <p>
@@ -20,6 +20,10 @@
   <%= @pushup_reminder.when_sent %>
 </p>
 
-
-<%= link_to 'Edit', edit_user_pushup_reminder_path(@user, @pushup_reminder) %> |
-<%= link_to 'Back', user_pushup_reminders_path(@user) %>
+<% if @user.presence %>
+    <%= link_to 'Edit', edit_user_pushup_reminder_path(@user, @pushup_reminder) %> |
+    <%= link_to 'Back', user_pushup_reminders_path(@user) %>
+<% else %>
+    <%= link_to 'Edit', edit_pushup_reminder_path(@pushup_reminder) %> |
+    <%= link_to 'Back', pushup_reminders_path %>
+<% end %>
